@@ -145,10 +145,13 @@ public class Player : MonoBehaviour
         {
            rb.AddForce(Vector2.up *forceHitEnemy);
             collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            collision.gameObject.GetComponent<Enemy>().enabled = false;
+        //    collision.gameObject.GetComponent<Enemy>().enabled = false;
             collision.gameObject.GetComponent<Rigidbody2D>().freezeRotation = false;
             collision.gameObject.GetComponent<Rigidbody2D>().gravityScale = 20f;
         }
     }
-    
+    public void SetMove(float horizontal)
+    {
+        this.horizontalInput = horizontal;
+    }
 }

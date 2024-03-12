@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     private bool isdeath = false;
    private IState currentstate;
     private bool isFacingRight = true;
-    private Player target;
+    public Player target;
     private PatrolStateOcSen patrolstate = new PatrolStateOcSen();
     private IdleStateOcSen idleState = new IdleStateOcSen();
     private ChaseStateOcSen chasestate = new ChaseStateOcSen();
@@ -27,11 +27,11 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindWithTag("Player");
         animator = GetComponent<Animator>();
-       ChangeState(patrolstate);
+      // ChangeState(patrolstate);
     }
     private void Update()
     {
-        currentstate.OnExcute(this);
+    // //   currentstate.OnExcute(this);
         UpdateAnim();
      
     }
@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour
     }
     private void UpdateAnim()
     {
-        animator.SetBool(Constant.AnimRun, Mathf.Abs(rb.velocity.x)>0);
+       // animator.SetBool(Constant.AnimRun, Mathf.Abs(rb.velocity.x)>0);
     }
     public void StopMoving()
     {
@@ -91,6 +91,7 @@ public class Enemy : MonoBehaviour
     }
     public bool IsTargetInRange(Player target)
     {
+        this.target = target;
         if(Vector2.Distance(target.transform.position, transform.position) < 0.5f)
         {
             return true;

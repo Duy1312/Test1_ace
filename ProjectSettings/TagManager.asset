@@ -10,6 +10,7 @@ TagManager:
   - ExitLevel
   - CheckPoint
   - HasCoin
+  - EnemySign
   layers:
   - Default
   - TransparentFX
