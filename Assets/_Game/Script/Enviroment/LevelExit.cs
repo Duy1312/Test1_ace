@@ -6,10 +6,16 @@ using UnityEngine.SceneManagement;
 public class LevelExit : MonoBehaviour
 {
     [SerializeField] private float waitToLoadScene = 1.0f;
+    private Animator animator;
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
+            animator.SetBool("isVictory", true);
             StartCoroutine(NextLevel());
         }
     }

@@ -1,98 +1,60 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
-    [SerializeField] private Transform ledgeDetect;
+   
 
-    [SerializeField] private float ledgeDetectDistance =1f;
+    public Animator anim;
+    public Rigidbody2D rb;
+    public Transform ledgeDetect;
+    public Transform ledgeBehindCheck;
 
-    [SerializeField] private LayerMask whatisground;
-    private float facingDir = 1;
-    private GameObject player;
-    private Animator animator;
-    private Rigidbody2D rb;
-    private bool isdeath = false;
-   private IState currentstate;
-    private bool isFacingRight = true;
-    public Player target;
-    private PatrolStateOcSen patrolstate = new PatrolStateOcSen();
-    private IdleStateOcSen idleState = new IdleStateOcSen();
-    private ChaseStateOcSen chasestate = new ChaseStateOcSen();
+    public LayerMask whatisGround;
+    public LayerMask whatisPlayer;
 
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindWithTag("Player");
-        animator = GetComponent<Animator>();
-      // ChangeState(patrolstate);
-    }
-    private void Update()
-    {
-    // //   currentstate.OnExcute(this);
-        UpdateAnim();
-     
-    }
-    private void FixedUpdate()
-    {
-        CheckSurround();
-    }
-    private bool CheckSurround()
-    {
-
-        RaycastHit2D hit = Physics2D.Raycast(ledgeDetect.position, Vector2.down,ledgeDetectDistance,whatisground);
-        return hit.collider != null;
-
-    }
-    public void ApplyMove()
-    {
-        rb.velocity = transform.right * speed;
-    }
-    public void ApplyDoubleMove()
-    {
-        rb.velocity = transform.right * speed;
-    }
-    private void UpdateAnim()
-    {
-       // animator.SetBool(Constant.AnimRun, Mathf.Abs(rb.velocity.x)>0);
-    }
-    public void StopMoving()
-    {
-        rb.velocity = Vector2.zero;
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player")&& transform.position.y<-7) {
-            StartCoroutine(OnDespawn());
-        }
-    }
+    public LayerMask whatisEnemy;
 
 
-    IEnumerator OnDespawn()
+    public float stateTime;
+    public int facingDirection = 1;
+
+    
+    public bool isDie = false;
+    public EnemySO so;
+ 
+
+ 
+   
+    public virtual void Death()
     {
-        Destroy(gameObject);
-        yield return new WaitForSeconds(2);
-    }
-    private void OnDeath()
-    {
-        animator.SetBool(Constant.AnimDie, isdeath);
+        isDie = true;
+        StartCoroutine(OnDespawn());
     }
     
-    public void ChangeState(IState state)
+    public IEnumerator OnDespawn()
     {
-        if(currentstate != state)
-        {
-            currentstate.OnExit(this);
-            currentstate = state;
-            currentstate.OnEnter(this);
-        }
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
     }
-    public bool IsTargetInRange(Player target)
+
+
+
+
+    public virtual void Rotate()
     {
-        this.target = target;
-        if(Vector2.Distance(target.transform.position, transform.position) < 0.5f)
+        facingDirection = -facingDirection;
+        transform.Rotate(0f, 180f, 0f);
+    }
+  
+ 
+    public virtual bool CheckPlayer()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(ledgeDetect.position, facingDirection == 1 ? Vector2.right : Vector2.left, so.checkDistancePlayer, whatisPlayer);
+        if (hit.collider != null)
         {
             return true;
         }
@@ -101,30 +63,40 @@ public class Enemy : MonoBehaviour
             return false;
         }
     }
-    public void SetTargetInRange(Player player)
+    public virtual bool CheckEnemy()
     {
-        if(player != null)
+        RaycastHit2D hit = Physics2D.Raycast(ledgeDetect.position, facingDirection == 1 ? Vector2.right : Vector2.left, so.checkDistancePlayer, whatisEnemy);
+        if (hit.collider != null)
         {
-            if (IsTargetInRange(player))
-            {
-                ChangeState(patrolstate);
-            }
-            else
-            {
-                ChangeState(idleState);
-            }
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
-    public void ChangeDirection(bool isFacingRight)
+    public virtual bool CheckGround()
     {
-        this.isFacingRight = isFacingRight;
-     transform.rotation = isFacingRight ? Quaternion.Euler(0,0,0) : Quaternion.Euler(0,180,0);
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("EnemySign"))
+        RaycastHit2D hit = Physics2D.Raycast(ledgeDetect.position, Vector2.down, so.checkDistanceGround, whatisGround);
+
+        if (hit.collider == null)
         {
-            ChangeDirection(!isFacingRight);
+
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
+
+
+    public virtual void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(ledgeDetect.position, ledgeDetect.position + (Vector3)(Vector2.right * facingDirection * so.checkDistancePlayer));
+        Gizmos.DrawLine(ledgeDetect.position, ledgeDetect.position + (Vector3)(Vector2.down * so.checkDistanceGround));
+
+    }
+
+   
 }

@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1938344320658016142
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3648554478715021750}
+  - component: {fileID: 448298118442799229}
+  - component: {fileID: 6298046166566998365}
+  m_Layer: 0
+  m_Name: TimeLineEnd
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3648554478715021750
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938344320658016142}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &448298118442799229
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938344320658016142}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 10377e0fd86ae18449b9a8fe9f59a415, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -5004924478834838076, guid: 10377e0fd86ae18449b9a8fe9f59a415, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 3597385072366195829, guid: 10377e0fd86ae18449b9a8fe9f59a415, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 4628106299628721843, guid: 10377e0fd86ae18449b9a8fe9f59a415, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -8005105444123050442, guid: 10377e0fd86ae18449b9a8fe9f59a415, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 496247696299906406, guid: 10377e0fd86ae18449b9a8fe9f59a415, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 545291570712541818, guid: 10377e0fd86ae18449b9a8fe9f59a415, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 5939293291150685520, guid: 10377e0fd86ae18449b9a8fe9f59a415, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References:
+    - 8190e35ba9b069041aa150d4e718f0e5: {fileID: 0}
+    - f511bffd91b508941bc59416ca3e2ecc: {fileID: 0}
+    - d6a4d5bab9aad2948832e732df99df03: {fileID: 0}
+    - 761c12d11b1683e4ea3ca4ee8e4f5e19: {fileID: 0}
+--- !u!114 &6298046166566998365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938344320658016142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 90fee93d10e797241a7c5dfd2ff12cff, type: 2}
+    - {fileID: 11400000, guid: 34bd3c57a95f97f4a9dd11b6816472f6, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: Player, Assembly-CSharp
+          m_MethodName: DisableController
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: Player, Assembly-CSharp
+          m_MethodName: EnableController
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2

@@ -11,6 +11,7 @@ TagManager:
   - CheckPoint
   - HasCoin
   - EnemySign
+  - Coin
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Ground
   - Bullet
   - Enemy
-  - 
+  - Coin
   - 
   - 
   - 

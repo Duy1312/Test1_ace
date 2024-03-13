@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEditor;
@@ -21,15 +21,16 @@ public class Player : MonoBehaviour
     [Header("Anim")]
     [SerializeField] private Animator animator;
     [Header("Weapon")]
-    [SerializeField] private Bullet bombPrefab;
+    [SerializeField] private BulletPlayer bombPrefab;
     private float horizontalInput;
     [Header("SavePoint")]
      private Vector3 savePoint;
     [Header("Enemy")]
     [SerializeField] private float forceHitEnemy;
+    [SerializeField] private LayerMask whatisEnemy;
     [Header("Brick")]
     [SerializeField] private float forceHitBrick;
-
+    private bool canMove = true;
     [SerializeField] private int scoreIncrese;
     [Header("Attack")]
  private bool isAttack;
@@ -39,40 +40,42 @@ public class Player : MonoBehaviour
     void Start()
     {
         isAttack = false;
-        transform.position = savePoint;
-        SavePoint();
     }
    
 
     void Update()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
+        //  horizontalInput = Input.GetAxisRaw("Horizontal");
         // float verticalInput = Input.GetAxisRaw("Vertical");
-         checkGround = CheckGrounded();
-        if(checkGround)
-       {
-            CheckJump();
-        }
-    
-        if(!checkGround && rb.velocity.y < 0)
+        if (canMove)
         {
-            isJumping = false;
+            checkGround = CheckGrounded();
+            if (checkGround)
+            {
+                CheckJump();
+            }
 
-      }
-       
+            if (!checkGround && rb.velocity.y < 0)
+            {
+                isJumping = false;
+
+            }
+
+
+            ApplyMove();
+
+
+
+
+            if (checkGround && Input.GetKeyDown(KeyCode.Z))
+            {
+                ThrowBomb();
+            }
+
+
+            UpdateAnim();
+        }
         
-        ApplyMove();
-
-
-
-       
-        if (checkGround && Input.GetKeyDown(KeyCode.Z))
-        {
-            ThrowBomb();
-        }
-      
-      
-        UpdateAnim();
 
     }
     private void ApplyMove()
@@ -97,25 +100,42 @@ public class Player : MonoBehaviour
     }
     private void CheckJump()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space) && checkGround)
         {
             isJumping = true;
            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            checkGround = false;
 
         }
     }
-   private void UpdateAnim()
+    public void PressJump()
+    {
+        if (CheckGrounded())
+        {
+            isJumping = true;
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+
+        }
+
+
+    }
+    private void UpdateAnim()
     {
         animator.SetBool(Constant.AnimIdle, rb.velocity.x == 0);
         animator.SetFloat(Constant.AnimRun, Mathf.Abs(horizontalInput));
         animator.SetBool(Constant.AnimJump, isJumping);
 
     }
-    public void SavePoint()
+   public void EnableController()
     {
-        savePoint = transform.position;
+        canMove = true;
     }
-   private void ThrowBomb()
+
+    public void DisableController()
+    {
+        canMove = false;
+    }
+    public void ThrowBomb()
     {
         Instantiate(bombPrefab,transform.position, Quaternion.identity);
  
@@ -137,21 +157,31 @@ public class Player : MonoBehaviour
   
     private void OnCollisionEnter2D(Collision2D collision)
     {
-   
 
-
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
-        if( hit.collider != null&&hit.distance < 0.9f && collision.gameObject.CompareTag("Enemy"))
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down,checkEnemyDistance, whatisEnemy);
+        if ( hit.collider != null && collision.gameObject.CompareTag("Enemy"))
         {
-           rb.AddForce(Vector2.up *forceHitEnemy);
+            Debug.Log("Có va chạm với " + hit.collider.gameObject.name);
+            rb.AddForce(Vector2.up *forceHitEnemy);
             collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-        //    collision.gameObject.GetComponent<Enemy>().enabled = false;
+
+            collision.gameObject.GetComponent<Enemy>().Death();
+            //   collision.gameObject.GetComponent<Enemy>().enabled = false;
             collision.gameObject.GetComponent<Rigidbody2D>().freezeRotation = false;
             collision.gameObject.GetComponent<Rigidbody2D>().gravityScale = 20f;
+            PlayerScore.Instance.CountScore(20);
         }
     }
+
     public void SetMove(float horizontal)
     {
         this.horizontalInput = horizontal;
+    }
+    public virtual void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(transform.position, transform.position + (Vector3)(Vector2.down  * checkEnemyDistance));
+
+
+
     }
 }

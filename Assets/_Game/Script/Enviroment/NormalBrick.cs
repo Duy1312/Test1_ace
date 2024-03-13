@@ -6,6 +6,7 @@ public class NormalBrick : MonoBehaviour
 {
     private Player player;
     [SerializeField] private float forceHitBrick = 5f;
+    [SerializeField] private LayerMask whatisPlayer;
     Vector2 original;
     private Rigidbody2D rb;
     private bool hasMovedUp = false;
@@ -17,13 +18,15 @@ public class NormalBrick : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        RaycastHit2D hitDown = Physics2D.Raycast(transform.position, Vector2.down);
-        if (hitDown.collider != null && hitDown.distance < 0.5f && collision.gameObject.CompareTag("Player") && !hasMovedUp)
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, whatisPlayer);
+
+      //  RaycastHit2D hitDown = Physics2D.Raycast(transform.position  , Vector2.down * 1.1f);
+        if (hit.collider != null && collision.gameObject.CompareTag("Player") && !hasMovedUp)
         {
-            Debug.Log("sd");
+        
             player.GetComponent<Rigidbody2D>().AddForce(Vector2.down * forceHitBrick);
            // StartCoroutine(MoveUpAndReturn());
-            rb.AddForce(Vector2.up * forceHitBrick);
+          
             //  transform.position = original;
             StartCoroutine(MoveUpAndReturn());
         }
@@ -31,7 +34,7 @@ public class NormalBrick : MonoBehaviour
    
     private IEnumerator MoveUpAndReturn()
     {
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(.05f);
 
      
         float moveDuration = 0.5f;
@@ -40,13 +43,13 @@ public class NormalBrick : MonoBehaviour
         while (elapsedTime < moveDuration)
         {
             transform.Translate(Vector2.up * forceHitBrick * Time.deltaTime);
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.deltaTime * 5f;
             yield return null;
         }
 
         
         transform.position = original;
-        hasMovedUp = true;
+        hasMovedUp = false;
 
     }
 }

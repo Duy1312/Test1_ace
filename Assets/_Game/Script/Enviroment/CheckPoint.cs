@@ -19,7 +19,7 @@ public class CheckPoint : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player>().SavePoint();
+     
             isMoving = true;
         }
     }

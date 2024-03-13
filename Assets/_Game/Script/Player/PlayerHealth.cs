@@ -22,14 +22,16 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(transform.position.y < -7)
+        if(transform.position.y < -20)
         {
             Death = true;
         }
         if(Death == true)
         {
             Die();
+            UIManager.Instance.GameOver();
         }
+     
     }
 
     private IEnumerator Die()
@@ -38,6 +40,7 @@ public class PlayerHealth : MonoBehaviour
         Destroy(gameObject);
 
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy") && hasDied == false)
@@ -48,4 +51,5 @@ public class PlayerHealth : MonoBehaviour
             animator.SetBool(Constant.AnimDie, hasDied);
         }
     }
+
 }

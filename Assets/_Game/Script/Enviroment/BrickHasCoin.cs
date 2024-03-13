@@ -6,32 +6,39 @@ public class BrickHasCoin : MonoBehaviour
 {
     private Animator animator;
     private bool isTouch = false;
+    [SerializeField] private int numberToGetCoin = 3;
+    private bool isPermanentTouch = false;
+
     void Start()
     {
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         UpdateAnim();
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && !isTouch && !isPermanentTouch)
         {
             isTouch = true;
-        
-        }
-    }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            isTouch = false;
+            numberToGetCoin--;
+            PlayerScore.Instance.CountCoin(10);
 
+            if (numberToGetCoin == 0)
+            {
+                isPermanentTouch = true;
+            }
         }
     }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        isTouch = false;
+    }
+
     private void UpdateAnim()
     {
         animator.SetBool(Constant.AnimTouchBrick, isTouch);

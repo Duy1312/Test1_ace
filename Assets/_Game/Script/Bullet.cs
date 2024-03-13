@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float speed = 10f;
+    [SerializeField] protected float speed = 10f;
     [SerializeField] private float timetoDestroy = 3f;
     private Rigidbody2D rb;
 
@@ -15,14 +15,25 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector2.right * speed * Time.deltaTime);
+        Fire();
 
         Invoke(nameof(OnDespawn), 1f);
+    }
+    protected virtual void Fire()
+    {
+
     }
    public void OnDespawn()
     {
         rb.velocity = Vector2.zero;
         Destroy(gameObject);
     }
-   
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            collision.gameObject.GetComponent<Enemy>().Death();
+        }
+    }
+
 }
