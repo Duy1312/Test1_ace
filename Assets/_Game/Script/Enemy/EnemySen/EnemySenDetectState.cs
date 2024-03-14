@@ -28,6 +28,10 @@ public class EnemySenDetectState : EnemySenBaseState
                 enemySen.SwitchState(enemySen.chargeState);
             }
         }
+        if (enemySen.isDie == true)
+        {
+            enemySen.SwitchState(enemySen.shellState);
+        }
     }
 
     public override void OnExit()

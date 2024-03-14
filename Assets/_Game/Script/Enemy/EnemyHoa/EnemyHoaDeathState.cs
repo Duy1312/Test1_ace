@@ -11,6 +11,9 @@ public class EnemyHoaDeathState : EnemyHoaBaseState
     public override void OnEnter()
     {
         base.OnEnter();
+        enemyHoa.rb.velocity = Vector3.zero;
+
+        enemyHoa.StartCoroutine(enemyHoa.OnDespawn());
     }
 
     public override void OnExcute()

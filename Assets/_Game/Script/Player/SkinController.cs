@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkinController : MonoBehaviour
+public class SkinController : SingleTon<SkinController> 
 {
     public Button defaultBtn;
     public Button beautyBtn;
@@ -16,11 +16,13 @@ public class SkinController : MonoBehaviour
     public AnimatorOverrideController beautySkin;
     public AnimatorOverrideController godSkin;
 
-    public bool isBeautyPurchased = false;
-    public bool isGodPurchased = false;
-    public bool isDefaultPurchased = true;
+    public bool isBeautyPurchased;
+    public bool isGodPurchased ;
+    public bool isDefaultPurchased ;
 
     public GameObject player;
+
+    public GameObject playerTimeLine;
 
     private void Start()
     {
@@ -36,7 +38,9 @@ public class SkinController : MonoBehaviour
     private void ApplySkin(AnimatorOverrideController skin)
     {
         var animator = player.GetComponent<Animator>();
+        var animatorTimeLine = playerTimeLine.GetComponent<Animator>();
         animator.runtimeAnimatorController = skin;
+        animatorTimeLine.runtimeAnimatorController = skin;
     }
 
     private void DefaultClick()
@@ -82,6 +86,16 @@ public class SkinController : MonoBehaviour
     }
     private void Update()
     {
+        if (isGodPurchased)
+        {
+            ApplySkin(godSkin);
+        }else if (isBeautyPurchased)
+        {
+            ApplySkin(beautySkin);
+        }else if (isDefaultPurchased)
+        {
+            ApplySkin(defaultSkin);
+        }
         PlayerPrefs.SetInt("IsBeautyPurchased", isBeautyPurchased ? 1 : 0);
         PlayerPrefs.SetInt("IsGodPurchased", isGodPurchased ? 1 : 0);
         PlayerPrefs.SetInt("IsDefaultPurchased", isDefaultPurchased ? 1 : 0);

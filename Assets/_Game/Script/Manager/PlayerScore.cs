@@ -42,7 +42,7 @@ public class PlayerScore : SingleTon<PlayerScore>
     }
     private int GetCurrentScene()
     {
-        int currentScene = SceneManager.GetActiveScene().buildIndex -1;
+        int currentScene = SceneManager.GetActiveScene().buildIndex +1;
         return currentScene;
 
     }
@@ -53,6 +53,10 @@ public class PlayerScore : SingleTon<PlayerScore>
     public void CountCoin(int coinIncrese)
     {
         coin = coin + coinIncrese;
+    }
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.DeleteAll();
     }
 
 }

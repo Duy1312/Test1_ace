@@ -7,7 +7,7 @@ public class BulletHoa : Bullet
     protected override void Fire()
     {
         base.Fire();
-        transform.Translate(Vector2.left * speed * Time.deltaTime);
+        rb.velocity = -transform.right * speed;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

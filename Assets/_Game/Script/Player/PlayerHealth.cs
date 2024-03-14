@@ -19,35 +19,23 @@ public class PlayerHealth : MonoBehaviour
         Death = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if(transform.position.y < -20)
+        if(hasDied)
         {
-            Death = true;
+            return;
         }
-        if(Death == true)
-        {
-            Die();
-            UIManager.Instance.GameOver();
-        }
-     
     }
 
-    private IEnumerator Die()
-    {
-        yield return new WaitForSeconds(waitToDied);
-        Destroy(gameObject);
-
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy") && hasDied == false)
         {
+            UIManager.Instance.GameOver();
+ 
             hasDied = true;
-            rb.gravityScale = 20f;
-            gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
+     
             animator.SetBool(Constant.AnimDie, hasDied);
         }
     }

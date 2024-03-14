@@ -25,7 +25,10 @@ public class EnemySenPatrolState : EnemySenBaseState
         {
             enemySen.Rotate();
         }
-
+        if(enemySen.isDie == true)
+        {
+            enemySen.SwitchState(enemySen.shellState);
+        }
         if (enemySen.facingDirection == 1)
         {
             enemySen.rb.velocity = new Vector2(enemySen.so.speed, enemySen.rb.velocity.y);

@@ -21,6 +21,10 @@ public class EnemyHoaIdleState : EnemyHoaBaseState
         {
             enemyHoa.SwitchState(enemyHoa.attackState);
         }
+        if (enemyHoa.isDie == true)
+        {
+            enemyHoa.SwitchState(enemyHoa.deathState);
+        }
     }
 
     public override void OnExit()

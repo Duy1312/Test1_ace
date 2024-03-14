@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class BrickHasCoin : MonoBehaviour
 {
+    [SerializeField] private GameObject coinPop;
     private Animator animator;
     private bool isTouch = false;
     [SerializeField] private int numberToGetCoin = 3;
     private bool isPermanentTouch = false;
-
+    private Animator coinAnim;
     void Start()
     {
+
         animator = GetComponent<Animator>();
+        coinAnim = coinPop.GetComponent<Animator>();
     }
 
     void Update()
@@ -24,23 +27,43 @@ public class BrickHasCoin : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && !isTouch && !isPermanentTouch)
         {
             isTouch = true;
-            numberToGetCoin--;
+          
             PlayerScore.Instance.CountCoin(10);
-
-            if (numberToGetCoin == 0)
-            {
-                isPermanentTouch = true;
-            }
+            coinAnim.Play("CoinUp");
+         
+         
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        isTouch = false;
+        if (collision.gameObject.CompareTag("Player")&& isTouch == true)
+        {
+            if (numberToGetCoin > 0)
+            {
+                isTouch = false;
+                numberToGetCoin--;
+                if (numberToGetCoin == 0)
+                {
+                    isPermanentTouch = true;
+                    isTouch = false;
+                 
+                }
+            }
+
+        }
+    
+      
     }
 
     private void UpdateAnim()
     {
         animator.SetBool(Constant.AnimTouchBrick, isTouch);
+        if(numberToGetCoin == 0)
+        {
+        
+            animator.SetTrigger("done");
+        }
     }
+
 }

@@ -32,12 +32,12 @@ public class Enemy : MonoBehaviour
     public virtual void Death()
     {
         isDie = true;
-        StartCoroutine(OnDespawn());
+     
     }
     
     public IEnumerator OnDespawn()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.2f);
         Destroy(gameObject);
     }
 

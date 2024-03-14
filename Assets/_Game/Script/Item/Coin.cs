@@ -12,12 +12,8 @@ public class Coin : MonoBehaviour
         {
             PlayerScore.Instance.CountCoin(10);
             anim.gameObject.SetActive(true);
-            StartCoroutine(Despawn());
+            Destroy(gameObject);
         }
     }
-    IEnumerator Despawn()
-    {
-        yield return new WaitForSeconds(.3f);
-        Destroy(gameObject);
-    }
+
 }

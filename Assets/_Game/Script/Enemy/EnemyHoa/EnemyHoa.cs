@@ -32,6 +32,10 @@ public class EnemyHoa : Enemy
     private void Update()
     {
         currentState.OnExcute();
+        if (isDie == true)
+        {
+            currentState = deathState;
+        }
     }
 
 

@@ -29,7 +29,10 @@ public class EnemyNamPatrolState : EnemyNamBaseState
         {
             enemyNam.Rotate();
         }
-
+        if (enemyNam.isDie == true)
+        {
+            enemyNam.SwitchState(enemyNam.deathState);
+        }
         if (enemyNam.facingDirection == 1)
         {
             enemyNam.rb.velocity = new Vector2(enemyNam.so.speed, enemyNam.rb.velocity.y);

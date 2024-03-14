@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerSavePoint : MonoBehaviour
 {
-    private List<GameObject> spawnPoints;
-    private Transform spawnPoint;
+
+    public List<GameObject> spawnPoints;
+    public Transform spawnPoint;
     private Animator animator;
     private void Start()
     {
@@ -13,9 +14,9 @@ public class PlayerSavePoint : MonoBehaviour
         spawnPoints = new List<GameObject>();
         if (spawnPoint == null)
         {
-            spawnPoint = GameObject.FindGameObjectsWithTag("CheckPoint")[0].transform;
+            spawnPoint = spawnPoints[0].transform;
             spawnPoints.Add(spawnPoint.gameObject);
-        }
+      }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -31,32 +32,23 @@ public class PlayerSavePoint : MonoBehaviour
     {
         if (spawnPoint != null)
         {
-            spawnPoint = FindCloseRespawn();
+           
+                spawnPoint = spawnPoints[spawnPoints.Count - 1].transform;
+            
+            
             gameObject.transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z);
             animator.SetBool(Constant.AnimIdle, true);
         }
     }
-    private Transform FindCloseRespawn()
+    public void StartPoint()
     {
-        Transform closest = null;
-
-        float cloestDistance = Mathf.Infinity;
-
-        Vector3 currentPosition = transform.position;
-
-        foreach (GameObject t in spawnPoints)
+        if (spawnPoint != null)
         {
-            Vector3 directionToSpawnPoint = t.transform.position - currentPosition;
-            float distanceSquared = directionToSpawnPoint.sqrMagnitude;
-
-            if (distanceSquared < cloestDistance)
-            {
-                closest = t.transform;
-                cloestDistance = distanceSquared;
-            }
+            spawnPoint = spawnPoints[0].transform;
+            gameObject.transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z);
+            animator.SetBool(Constant.AnimIdle, true);
         }
-
-        return closest != null ? closest : null;
     }
+    
 
 }

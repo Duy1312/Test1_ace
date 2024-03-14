@@ -29,6 +29,10 @@ public class EnemyNam : Enemy
     private void Update()
     {
         currentState.OnExcute();
+        if(isDie == true)
+        {
+            currentState = deathState;
+        }
     }
 
 

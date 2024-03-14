@@ -7,20 +7,20 @@ public class EnemySen : Enemy
     public EnemySenBaseState currentState;
     public EnemySenPatrolState patrolState;
     public EnemySenDetectState detectState;
-   
+   public EnemySenShellState shellState;
  
     public EnemySenDeathState deathState;
     public EnemySenChargeState chargeState;
 
 
     public Transform target;
-
+    public bool isTouch2 = false;
 
     private void Awake()
     {
         patrolState = new EnemySenPatrolState(this, "isRun");
         detectState = new EnemySenDetectState(this, "isIdle");
-   
+        shellState = new EnemySenShellState(this, "isShell");
         deathState = new EnemySenDeathState(this, "isDie");
         chargeState = new EnemySenChargeState(this, "isRun");
    
@@ -31,6 +31,10 @@ public class EnemySen : Enemy
     private void Update()
     {
         currentState.OnExcute();
+        if(currentState == shellState)
+        {
+            return;
+        }
     }
   
 
@@ -40,11 +44,17 @@ public class EnemySen : Enemy
         base.Death();
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && isDie == true)
+        {
+            isTouch2 = true;
+        }
+    }
 
-  
 
 
-   
+
     public void SwitchState(EnemySenBaseState enemySenBaseState)
     {
         currentState.OnExit();

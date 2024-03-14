@@ -32,6 +32,10 @@ public class EnemySenChargeState : EnemySenBaseState
          
             ChargePlayer();
         }
+        if (enemySen.isDie == true)
+        {
+            enemySen.SwitchState(enemySen.shellState);
+        }
     }
 
     public override void OnExit()
