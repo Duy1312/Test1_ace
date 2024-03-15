@@ -13,7 +13,8 @@ public class BulletHoa : Bullet
     {
         if (collision.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerHealth>().Death = true;
+            collision.gameObject.GetComponent<PlayerHealth>().hasDied = true;
+            Invoke(nameof(OnDespawn), 0.5f);
         }
     }
 }

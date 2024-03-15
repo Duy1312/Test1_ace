@@ -13,7 +13,7 @@ public class EnemySenShellState : EnemySenBaseState
     public override void OnEnter()
     {
         base.OnEnter();
-        blockTime = 2f;
+        blockTime = 3f;
        
     }
 
@@ -27,15 +27,19 @@ public class EnemySenShellState : EnemySenBaseState
         }
         else
         {
-            if (enemySen.CheckGround())
+           if(enemySen.CheckGroundAhead())
             {
                 enemySen.Rotate();
             }
-           
+            else
+            {
+                enemySen.rb.velocity = new Vector2(enemySen.rb.velocity.x,  -10);
+            }
            
         }
         if(enemySen.isTouch2 == true)
         {
+
             if (enemySen.facingDirection == 1)
             {
                 enemySen.rb.velocity = new Vector2(enemySen.so.speed * 30, enemySen.rb.velocity.y);
@@ -49,7 +53,11 @@ public class EnemySenShellState : EnemySenBaseState
         {
             enemySen.rb.velocity = Vector2.zero;
         }
-       
+        if (enemySen.isSendie == true)
+        {
+            enemySen.SwitchState(enemySen.deathState);
+        }
+
 
     }
     public override void OnExit()

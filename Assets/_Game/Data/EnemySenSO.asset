@@ -18,6 +18,6 @@ MonoBehaviour:
   checkDistanceGround: 1
   speed: 1
   ledgeBehindCheckDistance: 1
-  checkDistancePlayer: 1
+  checkDistancePlayer: 1.5
   detectMaskPopTime: 1
   detectWaitTime: 1

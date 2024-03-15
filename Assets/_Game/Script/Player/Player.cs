@@ -18,19 +18,21 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform ledgeDetectDown;
     [SerializeField] private float checkGroundDistance;
     [SerializeField] private LayerMask whatisGround;
+
+    [SerializeField] private LayerMask whatisBrick;
     [SerializeField] private float checkEnemyDistance = 5f;
     [Header("Anim")]
     [SerializeField] private Animator animator;
     [Header("Weapon")]
     [SerializeField] private BulletPlayer bombPrefab;
-    private float horizontalInput;
-  
+    public float horizontalInput;
+
     [Header("Enemy")]
     [SerializeField] private float forceHitEnemy;
     [SerializeField] private LayerMask whatisEnemy;
     [Header("Brick")]
     [SerializeField] private float forceHitBrick;
-    private bool canMove = true;
+    public bool canMove = true;
     [SerializeField] private int scoreIncrese;
     [Header("Attack")]
     [SerializeField] private float coolDown = 2f;
@@ -41,6 +43,7 @@ public class Player : MonoBehaviour
     private PlayerHealth playerhealth;
     private bool checkGround;
     public bool isFacingRight = false;
+    private bool isHit;
     void Start()
     {
         isAttack = false;
@@ -77,16 +80,52 @@ public class Player : MonoBehaviour
                 ThrowBomb();
                  
             }
-           
 
 
-            UpdateAnim();
+            RaycastHit2D hitUp = Physics2D.Raycast(transform.position, Vector2.up, 1.8f, whatisEnemy);
+            if (hitUp.collider != null)
+            {
+                rb.AddForce(Vector2.down * forceHitBrick);
+
+                Enemy enemy = hitUp.collider.gameObject.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.GetComponent<Collider2D>().enabled = false;
+                    if (enemy.facingDirection == 1)
+                    {
+                        enemy.rb.velocity = new Vector2(enemy.so.speed / 2, enemy.so.speed*3 );
+                    }
+                    else
+                    {
+                        enemy.rb.velocity = new Vector2(-enemy.so.speed / 2, enemy.so.speed*3 );
+                    }
+                    enemy.Death();
+                    enemy.isSendie = true;
+                }
+
+                PlayerScore.Instance.CountScore(20);
+            }
+ 
         }
-        
+        UpdateAnim();
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 1f, whatisGround);
+        if (hit.collider != null )
+        {
+             isHit = true;
+            StartCoroutine(hit.collider.gameObject.GetComponent<NormalBrick>().MoveUpAndReturn());
+        }
+
+    }
+    private void FixedUpdate()
+    {
+        if (isHit)
+        {
+            isHit = false;
+            rb.AddForce(Vector2.down * forceHitBrick);
+        }
 
     }
 
- 
     private void ApplyMove()
     {
         if (horizontalInput > 0f && isFacingRight == true)
@@ -99,7 +138,7 @@ public class Player : MonoBehaviour
         }
         rb.velocity = new Vector2(horizontalInput * speed, rb.velocity.y);
     }
-  
+
     private bool CheckGrounded()
     {
         Debug.DrawLine(transform.position,transform.position + Vector3.down * checkGroundDistance,Color.red);
@@ -123,6 +162,10 @@ public class Player : MonoBehaviour
             checkGround = false;
 
         }
+    }
+    private void ApplyJump()
+    {
+
     }
     public void PressJump()
     {
@@ -195,12 +238,9 @@ public class Player : MonoBehaviour
                 PlayerScore.Instance.CountScore(20);
             }
         }
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 1f, whatisGround);
-        if(hit.collider != null && collision.gameObject.CompareTag("Brick"))
-        {
-           rb.AddForce(Vector2.down * forceHitBrick);
-            StartCoroutine( collision.gameObject.GetComponent<NormalBrick>().MoveUpAndReturn());
-        }
+      
+       
+
         //RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down,checkEnemyDistance, whatisEnemy);
         //if ( hit.collider != null && collision.gameObject.CompareTag("Enemy"))
         //{
@@ -218,7 +258,18 @@ public class Player : MonoBehaviour
 
     public void SetMove(float horizontal)
     {
-        this.horizontalInput = horizontal;
+        int pointEndLayer = LayerMask.NameToLayer("PointEnd");
+        int layerMask = 1 << pointEndLayer;
+
+        if (GetComponent<Collider2D>().IsTouchingLayers(layerMask))
+        {
+            isJumping = false;
+            this.horizontalInput = 0;
+        }
+        else
+        {
+            this.horizontalInput = horizontal;
+        }
     }
     public virtual void OnDrawGizmos()
     {

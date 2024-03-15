@@ -32,7 +32,7 @@ public class UIManager : SingleTon<UIManager>
     {
         gameoverUI.SetActive(false);
         playerSavePoint.Reborn();
-        playerHealth.Death = false;
+
         playerHealth.hasDied = false;
 
 
@@ -46,7 +46,7 @@ public class UIManager : SingleTon<UIManager>
         gamepauseUI.SetActive(false);
         gameoverUI.SetActive(false);
         playerSavePoint.StartPoint();
-        playerHealth.Death = false;
+
         playerHealth.hasDied = false;
         playerHealth.GetComponent<CapsuleCollider2D>().enabled = true;
 

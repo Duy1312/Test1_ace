@@ -14,6 +14,7 @@ TagManager:
   - Coin
   - Ground
   - EnemySen
+  - PointEnd
   layers:
   - Default
   - TransparentFX
@@ -26,8 +27,8 @@ TagManager:
   - Enemy
   - Coin
   - EnemySen
-  - 
-  - 
+  - PointEnd
+  - Brick
   - 
   - 
   - 

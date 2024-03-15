@@ -11,6 +11,9 @@ public class EnemySenDeathState : EnemySenBaseState
     public override void OnEnter()
     {
         base.OnEnter();
+ 
+
+        enemySen.StartCoroutine(enemySen.OnDespawn());
     }
 
     public override void OnExcute()

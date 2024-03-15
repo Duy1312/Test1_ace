@@ -13,8 +13,11 @@ public class EnemySen : Enemy
     public EnemySenChargeState chargeState;
 
 
-    public Transform target;
+  [HideInInspector]  public Transform target;
     public bool isTouch2 = false;
+    public int countTouch;
+    public float coolDown = 3f;
+    public float countDown = 0f;
 
     private void Awake()
     {
@@ -31,10 +34,16 @@ public class EnemySen : Enemy
     private void Update()
     {
         currentState.OnExcute();
-        if(currentState == shellState)
+        if(countTouch == 1)
         {
-            return;
+            countDown += Time.deltaTime;
         }
+        if(countDown > coolDown)
+        {
+            countDown = 0;
+            countTouch = 0;
+        }
+    
     }
   
 
@@ -46,15 +55,28 @@ public class EnemySen : Enemy
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && isDie == true)
+        if (collision.gameObject.CompareTag("Player") )
+        {
+            countTouch++;
+        }
+        if (countTouch == 2)
         {
             isTouch2 = true;
+            countTouch = 0;
+            countDown = 0;
+        }
+         
+        if (currentState == shellState && collision.gameObject.CompareTag("Enemy"))
+        {
+            collision.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            collision.gameObject.GetComponent<Enemy>().isDie = true;
+
+
         }
     }
+  
 
-
-
-
+   
     public void SwitchState(EnemySenBaseState enemySenBaseState)
     {
         currentState.OnExit();

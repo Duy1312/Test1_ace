@@ -50,8 +50,6 @@ PlayableDirector:
   m_SceneBindings:
   - key: {fileID: -5004924478834838076, guid: 10377e0fd86ae18449b9a8fe9f59a415, type: 2}
     value: {fileID: 0}
-  - key: {fileID: 3597385072366195829, guid: 10377e0fd86ae18449b9a8fe9f59a415, type: 2}
-    value: {fileID: 0}
   - key: {fileID: 4628106299628721843, guid: 10377e0fd86ae18449b9a8fe9f59a415, type: 2}
     value: {fileID: 0}
   - key: {fileID: -8005105444123050442, guid: 10377e0fd86ae18449b9a8fe9f59a415, type: 2}
@@ -59,10 +57,6 @@ PlayableDirector:
   - key: {fileID: 496247696299906406, guid: 10377e0fd86ae18449b9a8fe9f59a415, type: 2}
     value: {fileID: 0}
   - key: {fileID: 545291570712541818, guid: 10377e0fd86ae18449b9a8fe9f59a415, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: 5939293291150685520, guid: 10377e0fd86ae18449b9a8fe9f59a415, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: 1732703812453073065, guid: 10377e0fd86ae18449b9a8fe9f59a415, type: 2}
     value: {fileID: 0}
   m_ExposedReferences:
     m_References:

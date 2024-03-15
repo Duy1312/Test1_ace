@@ -12,7 +12,7 @@ public class EnemyNam : Enemy
     public EnemyNamChaseState chargeState;
 
 
-    public Transform target;
+    [HideInInspector] public Transform target;
 
 
     private void Awake()

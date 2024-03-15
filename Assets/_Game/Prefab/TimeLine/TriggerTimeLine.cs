@@ -5,48 +5,58 @@ using UnityEngine.Playables;
 
 public class TriggerTimeLine : MonoBehaviour
 {
+    [SerializeField] PointEnd[] pointGameobject;
     [SerializeField] private PlayableDirector[] playableDirector;
-    private void OnTriggerEnter2D(Collider2D collision)
+    bool shouldDisableColliders = false;
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.CompareTag("Player"))
+        foreach (var p in pointGameobject)
         {
-            collision.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, -10f));
+            if (p.isCollect)
+            {
+                shouldDisableColliders = true;
+                break;
+            }
+        }
+
+        if (shouldDisableColliders)
+        {
+            foreach (var p in pointGameobject)
+            {
+                p.GetComponent<Collider2D>().enabled = false;
+            }
+        }
+        if (collision.gameObject.CompareTag("Player"))
+        {
+   
+
+
             if (SkinController.Instance.isDefaultPurchased)
             {
-
-                PlayerDirector(playableDirector[0]);
+                StartCoroutine(PlayerDirector(playableDirector[0]));
             }
-            else if ( SkinController.Instance.isBeautyPurchased)
+            else if (SkinController.Instance.isBeautyPurchased)
             {
-
-                PlayerDirector(playableDirector[1]);
+                StartCoroutine(PlayerDirector(playableDirector[1]));
 
             }
-            else if ( SkinController.Instance.isGodPurchased)
+            else if (SkinController.Instance.isGodPurchased)
             {
-              
-                PlayerDirector(playableDirector[2]);
+
+                StartCoroutine(PlayerDirector(playableDirector[2]));
 
             }
             else
             {
 
-                PlayerDirector(playableDirector[0]);
+                StartCoroutine(PlayerDirector(playableDirector[0]));
             }
         }
-         
-       
     }
-    private void OnTriggerExit2D(Collider2D collision)
+    
+    IEnumerator  PlayerDirector(PlayableDirector playableDirector)
     {
-        if (collision.CompareTag("Player"))
-        {
-            collision.GetComponent<Rigidbody2D>().gravityScale = 1f;
-
-        }
-    }
-    private void PlayerDirector(PlayableDirector playableDirector)
-    {
+        yield return new WaitForSeconds(1f);
         playableDirector.Play();
         GetComponent<BoxCollider2D>().enabled = false;
     }

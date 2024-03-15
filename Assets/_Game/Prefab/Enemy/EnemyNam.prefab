@@ -144,7 +144,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.025411129, y: -0.36591804}
+  m_Offset: {x: 0.0019741058, y: -0.36591804}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -155,7 +155,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5629301, y: 1.2681639}
+  m_Size: {x: 1.5081596, y: 1.2681639}
   m_EdgeRadius: 0
 --- !u!50 &2318313544453437014
 Rigidbody2D:
@@ -199,15 +199,18 @@ MonoBehaviour:
   anim: {fileID: 130933156150985698}
   rb: {fileID: 2318313544453437014}
   ledgeDetect: {fileID: 1461420451532831673}
-  ledgeBehindCheck: {fileID: 1488247058884634318}
   whatisGround:
     serializedVersion: 2
     m_Bits: 64
   whatisPlayer:
     serializedVersion: 2
     m_Bits: 8
+  whatisEnemy:
+    serializedVersion: 2
+    m_Bits: 0
   stateTime: 0
   facingDirection: 1
+  isSendie: 0
   isDie: 0
   so: {fileID: 11400000, guid: 25108b9a747bfc34faf1ce41ff4e64da, type: 2}
   target: {fileID: 0}
@@ -243,7 +246,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0060071945, y: -0.5226432}
+  m_Offset: {x: -0.00066661835, y: -0.5340538}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -254,7 +257,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.7236614, y: 0.9547136}
+  m_Size: {x: 1.5506172, y: 0.9318924}
   m_EdgeRadius: 0
 --- !u!1 &2703351682777055824
 GameObject:

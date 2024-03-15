@@ -14,7 +14,7 @@ public class EnemyHoa : Enemy
     public GameObject bullet;
     public float shootSpeed;
 
-    public Transform target;
+[HideInInspector]    public Transform target;
 
 
     private void Awake()
@@ -32,10 +32,7 @@ public class EnemyHoa : Enemy
     private void Update()
     {
         currentState.OnExcute();
-        if (isDie == true)
-        {
-            currentState = deathState;
-        }
+      
     }
 
 

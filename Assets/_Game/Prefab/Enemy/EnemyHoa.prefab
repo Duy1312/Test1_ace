@@ -143,7 +143,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.06, y: -0.21928501}
+  m_Offset: {x: 0.16192889, y: -0.21928501}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -154,7 +154,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.7806377, y: 2.18643}
+  m_Size: {x: 1.5767798, y: 2.18643}
   m_EdgeRadius: 0
 --- !u!50 &7837957818068175442
 Rigidbody2D:
@@ -164,7 +164,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1286926504270951425}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -182,7 +182,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 5
 --- !u!61 &7153233263971584251
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -215,7 +215,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.042605042, y: -0.7029846}
+  m_Offset: {x: 0.168396, y: -0.7029846}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -226,7 +226,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.0683181, y: 1.2190309}
+  m_Size: {x: 1.6536484, y: 1.2190309}
   m_EdgeRadius: 0
 --- !u!114 &5961352952537242483
 MonoBehaviour:
@@ -243,15 +243,18 @@ MonoBehaviour:
   anim: {fileID: 8232814935131200812}
   rb: {fileID: 7837957818068175442}
   ledgeDetect: {fileID: 8775639641424525131}
-  ledgeBehindCheck: {fileID: 8775639641424525131}
   whatisGround:
     serializedVersion: 2
     m_Bits: 64
   whatisPlayer:
     serializedVersion: 2
     m_Bits: 8
+  whatisEnemy:
+    serializedVersion: 2
+    m_Bits: 0
   stateTime: 0
   facingDirection: -1
+  isSendie: 0
   isDie: 0
   so: {fileID: 11400000, guid: 7aa20789b27009541ad9984a9ce689ab, type: 2}
   bullet: {fileID: 8814654525842989333, guid: 0674bf152ce2c4149af0c64ca08c3149, type: 3}

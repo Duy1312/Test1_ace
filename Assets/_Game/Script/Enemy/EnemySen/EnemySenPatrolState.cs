@@ -21,7 +21,7 @@ public class EnemySenPatrolState : EnemySenBaseState
             enemySen.SwitchState(enemySen.detectState);
         }
        
-        if (enemySen.CheckGround())
+        if (enemySen.CheckGround()|| enemySen.CheckEnemy())
         {
             enemySen.Rotate();
         }
@@ -36,6 +36,10 @@ public class EnemySenPatrolState : EnemySenBaseState
         else
         {
             enemySen.rb.velocity = new Vector2(-enemySen.so.speed, enemySen.rb.velocity.y);
+        }
+        if (enemySen.isSendie == true)
+        {
+            enemySen.SwitchState(enemySen.deathState);
         }
 
     }

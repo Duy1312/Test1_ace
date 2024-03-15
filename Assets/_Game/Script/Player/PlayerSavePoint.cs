@@ -36,7 +36,7 @@ public class PlayerSavePoint : MonoBehaviour
                 spawnPoint = spawnPoints[spawnPoints.Count - 1].transform;
             
             
-            gameObject.transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y, spawnPoint.position.z);
+            gameObject.transform.position = new Vector3(spawnPoint.position.x, spawnPoint.position.y+ 1f, spawnPoint.position.z);
             animator.SetBool(Constant.AnimIdle, true);
         }
     }

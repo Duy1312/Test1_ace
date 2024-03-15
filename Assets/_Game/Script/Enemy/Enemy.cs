@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     public Animator anim;
     public Rigidbody2D rb;
     public Transform ledgeDetect;
-    public Transform ledgeBehindCheck;
+
 
     public LayerMask whatisGround;
     public LayerMask whatisPlayer;
@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     public float stateTime;
     public int facingDirection = 1;
 
-    
+    public bool isSendie = false;   
     public bool isDie = false;
     public EnemySO so;
  
@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour
     
     public IEnumerator OnDespawn()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
     }
 
@@ -89,7 +89,20 @@ public class Enemy : MonoBehaviour
             return false;
         }
     }
+    public virtual bool CheckGroundAhead()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(ledgeDetect.position, facingDirection == 1 ? Vector2.right : Vector2.left, so.checkDistanceGround, whatisGround);
 
+        if (hit.collider != null)
+        {
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     public virtual void OnDrawGizmos()
     {

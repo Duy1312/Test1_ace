@@ -11,7 +11,7 @@ public class EnemyNamDeathState : EnemyNamBaseState
     public override void OnEnter()
     {
         base.OnEnter();
-        enemyNam.rb.velocity = Vector3.zero;
+
 
         enemyNam.StartCoroutine(enemyNam.OnDespawn());
     }

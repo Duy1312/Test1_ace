@@ -33,6 +33,10 @@ public class EnemyNamChaseState : EnemyNamBaseState
 
             ChargePlayer();
         }
+        if (enemyNam.isDie == true)
+        {
+            enemyNam.SwitchState(enemyNam.deathState);
+        }
     }
 
     public override void OnExit()

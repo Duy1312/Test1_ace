@@ -43,7 +43,7 @@ public class NormalBrick : MonoBehaviour
 
         while (elapsedTime < moveDuration)
         {
-            transform.Translate(Vector2.up * forceHitBrick * Time.deltaTime);
+            transform.Translate(Vector2.up * forceHitBrick/20 * Time.deltaTime);
             elapsedTime += Time.deltaTime * 5f;
             yield return null;
         }
